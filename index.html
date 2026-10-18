@@ -1,41 +1,260 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ur">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My App - Download APK</title>
+  <title>App Download - Pre-Launch</title>
   <style>
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; background: #0f172a; color: #ffffff; padding: 40px 20px; margin: 0; }
-    .container { max-width: 600px; margin: 0 auto; }
-    .app-icon { width: 100px; height: 100px; border-radius: 22px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); margin-bottom: 20px; }
-    h1 { font-size: 32px; margin-bottom: 10px; }
-    p { color: #94a3b8; font-size: 16px; line-height: 1.6; margin-bottom: 30px; }
-    .download-btn { background: #22c55e; color: white; padding: 16px 35px; font-size: 18px; font-weight: bold; text-decoration: none; border-radius: 30px; display: inline-block; box-shadow: 0 4px 14px rgba(34, 197, 94, 0.4); transition: 0.2s; }
-    .download-btn:hover { background: #16a34a; }
-    .info { margin-top: 20px; font-size: 14px; color: #64748b; }
-    .screenshots { display: flex; justify-content: center; gap: 15px; margin-top: 40px; flex-wrap: wrap; }
-    .screenshots img { width: 160px; border-radius: 12px; border: 2px solid #334155; }
+    /* RESET & VARS */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0f1d;
+      --card-bg: rgba(255, 255, 255, 0.05);
+      --border: rgba(255, 255, 255, 0.1);
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --accent: #22c55e;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 0;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    /* CONTAINER */
+    .wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+
+    /* HERO SECTION */
+    .hero {
+      text-align: center;
+      padding: 40px 20px 20px;
+    }
+    .app-icon {
+      width: 110px;
+      height: 110px;
+      border-radius: 24px;
+      object-fit: cover;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 0 1px var(--border);
+      margin-bottom: 20px;
+    }
+    .app-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+    .app-tagline {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 550px;
+      margin: 0 auto 25px;
+    }
+
+    /* BADGES / APP INFO STATS */
+    .stats-grid {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 10px 18px;
+      border-radius: 14px;
+      backdrop-filter: blur(10px);
+      min-width: 110px;
+    }
+    .stat-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    .stat-value { font-size: 1rem; font-weight: 700; color: var(--text); margin-top: 2px; }
+
+    /* DOWNLOAD BUTTON */
+    .cta-box { margin-bottom: 40px; }
+    .btn-download {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #ffffff;
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-decoration: none;
+      padding: 18px 42px;
+      border-radius: 50px;
+      box-shadow: 0 10px 30px rgba(34, 197, 94, 0.35);
+      transition: all 0.25s ease;
+      width: 100%;
+      max-width: 380px;
+    }
+    .btn-download:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px rgba(34, 197, 94, 0.5);
+    }
+    .btn-download:active { transform: translateY(0); }
+    .sub-text {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 10px;
+    }
+
+    /* SCREENSHOTS CAROUSEL (Horizontal Scroll) */
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+      text-align: left;
+    }
+    .screenshots-container {
+      display: flex;
+      gap: 15px;
+      overflow-x: auto;
+      padding-bottom: 15px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      margin-bottom: 40px;
+    }
+    .screenshots-container::-webkit-scrollbar { height: 6px; }
+    .screenshots-container::-webkit-scrollbar-track { background: var(--bg); }
+    .screenshots-container::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+    .shot-img {
+      scroll-snap-align: start;
+      flex: 0 0 200px;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+
+    /* FEATURES GRID */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 15px;
+      margin-bottom: 40px;
+      text-align: left;
+    }
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+    }
+    .feature-icon {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+    .feature-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    .feature-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding-top: 25px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    /* RESPONSIVE ADJUSTMENTS */
+    @media (max-width: 600px) {
+      .app-title { font-size: 1.8rem; }
+      .shot-img { flex: 0 0 170px; height: 340px; }
+      .btn-download { width: 100%; padding: 16px 20px; }
+    }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <!-- App Logo (Yahan apni app ke icon ka link daal sakte hain) -->
-    <img src="https://via.placeholder.com/100" class="app-icon" alt="App Logo">
+  <div class="wrapper">
     
-    <h1>Meri Behtareen App</h1>
-    <p>Aapki rozmarra ki zaroorat ko asaan banane wali zabardast Android application. Play Store par aane se pehle abhi download karein!</p>
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <!-- App Icon Image -->
+      <img src="https://via.placeholder.com/150/22c55e/ffffff?text=App+Icon" alt="App Icon" class="app-icon">
+      
+      <h1 class="app-title">Apni App Ka Naam</h1>
+      <p class="app-tagline">Is app ki sab se khaas baat aur tagline yahan likhein jo user ko attract kare.</p>
 
-    <!-- Download APK Button (Yahan apna Google Drive ya MediaFire ka APK link daal dein) -->
-    <a href="YOUR_APK_DIRECT_LINK_HERE" class="download-btn">📥 Download APK (v1.0)</a>
-    
-    <div class="info">Size: 15 MB • Android 8.0 & above</div>
+      <!-- QUICK STATS -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Version</div>
+          <div class="stat-value">v1.0.0-beta</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Size</div>
+          <div class="stat-value">18.5 MB</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Android OS</div>
+          <div class="stat-value">7.0+</div>
+        </div>
+      </div>
 
-    <!-- Screenshots Section -->
-    <div class="screenshots">
-      <img src="https://via.placeholder.com/160x320" alt="Screen 1">
-      <img src="https://via.placeholder.com/160x320" alt="Screen 2">
+      <!-- CALL TO ACTION BUTTON -->
+      <div class="cta-box">
+        <a href="YOUR_APK_DIRECT_URL_HERE" class="btn-download">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Direct Download APK
+        </a>
+        <div class="sub-text">🔒 Verified Safe • Direct APK Fast Download</div>
+      </div>
+    </section>
+
+    <!-- SCREENSHOTS SECTION -->
+    <h2 class="section-title">App Screenshots</h2>
+    <div class="screenshots-container">
+      <img src="https://via.placeholder.com/300x600/1e293b/ffffff?text=Screen+1" class="shot-img" alt="Screenshot 1">
+      <img src="https://via.placeholder.com/300x600/1e293b/ffffff?text=Screen+2" class="shot-img" alt="Screenshot 2">
+      <img src="https://via.placeholder.com/300x600/1e293b/ffffff?text=Screen+3" class="shot-img" alt="Screenshot 3">
+      <img src="https://via.placeholder.com/300x600/1e293b/ffffff?text=Screen+4" class="shot-img" alt="Screenshot 4">
     </div>
+
+    <!-- FEATURES SECTION -->
+    <h2 class="section-title">Key Features</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-title">Ultra Fast Speed</div>
+        <div class="feature-desc">Bina kisi lag ke smoothly chalti hai aur kam RAM consume karti hai.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎨</div>
+        <div class="feature-title">Modern Interface</div>
+        <div class="feature-desc">Clean aur user-friendly dark theme UI jo istemal mein bohot asan hai.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <div class="feature-title">Safe & Secure</div>
+        <div class="feature-desc">Aapka data bilkul safe rehta hai, kisi unnecessary permission ki zaroorat nahi.</div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>© 2026 Your App Name. Pre-Launch Beta Edition.</p>
+    </footer>
+
   </div>
 
 </body>
